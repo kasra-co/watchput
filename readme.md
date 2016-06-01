@@ -4,9 +4,9 @@
 
 ## Usage
 
-1. Set everything up: `sls dash deploy`. This will create an S3 bucket and a Lambda function subscribed to its createObject events. It's cheap, but not free.
-1. `cd` into `lambdas/watchput` and `sls function logs -t` to watch the Lambda function.
-1. Invoke the function remotely: `sls function run -d`. Within a few seconds, a log entry for should appear, containing the data in `lambdas/watchput/s-event.json`.
+1. Set everything up: `sls dash deploy`. This will create an S3 bucket and a Lambda function subscribed to its createObject events. It's probably free, but it might cost a buck or two per month. Shutdown and cleanup is trivial anyway.
+1. In another terminal, `cd` into `lambdas/watchput` and `sls function logs -t` to watch the Lambda function.
+1. Invoke the function remotely: `sls function run -d`. Within a few seconds, a log entry should appear, containing the data in `lambdas/watchput/s-event.json`.
 1. Trigger an S3 event by uploading a file, such as this readme: `aws s3 cp ./readme.md  s3://serverless-s3-watcher-dev-reports/archive/readme.md`. You should see an S3 event array in the logs.
 1. Clean up: `sls project remove`. This should delete all assets that you might have been billed for.
 
