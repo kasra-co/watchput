@@ -1,0 +1,45 @@
+{
+	"name": "watchput",
+	"runtime": "nodejs4.3",
+	"description": "Serverless Lambda function for project: serverless-s3-watcher",
+	"customName": false,
+	"customRole": false,
+	"handler": "handler.handler",
+	"timeout": 6,
+	"memorySize": 128,
+	"authorizer": {},
+	"custom": {
+		"excludePatterns": []
+	},
+	"endpoints": [],
+	"events": [
+		{
+			"name": "mySchedule",
+			"type": "schedule",
+			"config": {
+				"schedule": "rate(1 minute)",
+				"enabled": false
+			}
+		}, {
+			"name": "archiveBucket",
+			"type": "s3",
+			"config": {
+				"bucket": "${project}-${stage}-reports",
+				"bucketEvents": ["s3:ObjectCreated:*"],
+				"filterRules": [{
+					"name": "prefix",
+					"value": "archive/"
+				}]
+			}
+		}
+	],
+	"environment": {
+		"SERVERLESS_PROJECT": "${project}",
+		"SERVERLESS_STAGE": "${stage}",
+		"SERVERLESS_REGION": "${region}"
+	},
+	"vpc": {
+		"securityGroupIds": [],
+		"subnetIds": []
+	}
+}
